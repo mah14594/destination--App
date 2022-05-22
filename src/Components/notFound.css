@@ -1,0 +1,14 @@
+div{
+    color: blue;
+    font-weight: 700;
+}
+span a{
+    margin-top: 200px;
+    color: black;
+    font-weight: 900;
+    text-decoration: none;
+    display: block;
+}
+span a:hover{
+    color: blue;
+}

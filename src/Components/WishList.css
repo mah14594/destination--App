@@ -1,0 +1,20 @@
+
+thead{
+    color:blue;
+    font-weight: 700;
+    text-align: center;
+}
+td{
+    text-align: center;
+}
+td span{
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+.completed{
+    background-color: rgb(244, 137, 137);
+    color:black;
+}
+/* tr:nth-child(3){
+    font-size: 50px;
+} */
