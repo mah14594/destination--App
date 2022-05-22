@@ -13,8 +13,6 @@ export default function DestinationList() {
       destination.name.toLowerCase().includes(searchTerm.toLowerCase())
     ) {
       return destination;
-    } else {
-      return {};
     }
   });
   return (
