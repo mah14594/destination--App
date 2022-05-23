@@ -6,10 +6,7 @@ import SearchForm from "./SearchForm";
 import { fetchAllDestinations } from "../store";
 export default function DestinationList() {
   const dispatchHandler = useDispatch();
-
-  console.log("destinationList is running");
   useEffect(() => {
-    console.log("array is modified ");
     dispatchHandler(fetchAllDestinations());
   }, [dispatchHandler]);
   const { destinations, searchTerm } = useSelector((state) => state);

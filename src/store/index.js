@@ -152,14 +152,17 @@ const store = configureStore({
   reducer: destinationsSlice.reducer,
 });
 
-export const sendDestinations = (destinations, url) => {
+export const sendDestinations = (destinations, urlKey) => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = await fetch(url, {
-        method: "PUT",
-        //   mode: "no-cors",
-        body: JSON.stringify(destinations),
-      });
+      const response = await fetch(
+        ` https://destination-app-d14f1-default-rtdb.firebaseio.com/${urlKey}.json`,
+        {
+          method: "PUT",
+          //   mode: "no-cors",
+          body: JSON.stringify(destinations),
+        }
+      );
       if (!response.ok) {
         throw new Error("Sending data failed");
       }
