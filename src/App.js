@@ -4,21 +4,41 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import Navbar from "./Components/NavBar";
 import { useSelector, useDispatch } from "react-redux";
-import { sendWishDestination } from "./store";
+import { sendDestinations, fetchAllDestinations } from "./store";
 let isInitial = true;
 const Home = lazy(() => import("./Pages/Home"));
 const Favourits = lazy(() => import("./Pages/Favourits"));
 const Error = lazy(() => import("./Pages/Error"));
 function App() {
-  const { wishList } = useSelector((state) => state);
+  const { wishList, destinations } = useSelector((state) => state);
   const dispatchHandler = useDispatch();
   useEffect(() => {
     if (isInitial) {
       isInitial = false;
       return;
     }
-    dispatchHandler(sendWishDestination(wishList));
+    dispatchHandler(
+      sendDestinations(
+        wishList,
+        " https://destination-app-d14f1-default-rtdb.firebaseio.com/wishlist.json"
+      )
+    );
   }, [wishList, dispatchHandler]);
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false;
+      return;
+    }
+    if (destinations.length !== 0) {
+      dispatchHandler(
+        sendDestinations(
+          destinations,
+          " https://destination-app-d14f1-default-rtdb.firebaseio.com/destinations.json"
+        )
+      );
+    }
+  }, [destinations, dispatchHandler]);
+
   return (
     <BrowserRouter>
       <Navbar />

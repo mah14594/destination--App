@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Destination from "./Destination";
 import "./DestinationList.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SearchForm from "./SearchForm";
+import { fetchAllDestinations } from "../store";
 export default function DestinationList() {
+  const dispatchHandler = useDispatch();
+
   console.log("destinationList is running");
+  useEffect(() => {
+    console.log("array is modified ");
+    dispatchHandler(fetchAllDestinations());
+  }, [dispatchHandler]);
   const { destinations, searchTerm } = useSelector((state) => state);
+
   const filteredDistinations = destinations.filter((destination) => {
     if (searchTerm === "") {
       return destination;
