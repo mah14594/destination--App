@@ -5,6 +5,7 @@ import { Routes } from "react-router-dom";
 import Navbar from "./Components/NavBar";
 import { useSelector, useDispatch } from "react-redux";
 import { sendDestinations } from "./store";
+import Loading from "./Components/Loading";
 let isInitial = true;
 const Home = lazy(() => import("./Pages/Home"));
 const Favourits = lazy(() => import("./Pages/Favourits"));
@@ -28,7 +29,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Suspense fallback={<p className="text-center col-12">Loading...</p>}>
+      <Suspense fallback={<Loading></Loading>}>
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/wishlist" element={<Favourits />} />

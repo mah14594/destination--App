@@ -10,7 +10,6 @@ export default function WishList() {
     dispatchHandler(fetchWishDestinations());
   }, [dispatchHandler]);
   const { wishList, isLoading, error } = useSelector((state) => state);
-  console.log(error);
   let contents;
   if (isLoading) {
     contents = <Loading></Loading>;
