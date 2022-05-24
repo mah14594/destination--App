@@ -14,11 +14,9 @@ function App() {
   const { wishList, destinations } = useSelector((state) => state);
   const dispatchHandler = useDispatch();
   useEffect(() => {
-    if (isInitial) {
-      isInitial = false;
-      return;
+    if (destinations.length !== 0) {
+      dispatchHandler(sendDestinations(wishList, "wishlist"));
     }
-    dispatchHandler(sendDestinations(wishList, "wishlist"));
   }, [wishList, dispatchHandler]);
   useEffect(() => {
     if (destinations.length !== 0) {
