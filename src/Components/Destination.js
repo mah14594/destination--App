@@ -3,10 +3,9 @@ import React from "react";
 import { RiHeartFill } from "react-icons/ri";
 import { RiHeartLine } from "react-icons/ri";
 import { Actions } from "../store/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { sendWishDestination } from "../store/index";
 export default function Destination(props) {
-  const { destinations } = useSelector((state) => state);
   const dispatchHandler = useDispatch();
   const { id, name, description, image, isFavourit } = props.destinationData;
   const addToWishListHandler = () => {

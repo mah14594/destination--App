@@ -4,12 +4,15 @@ import "./DestinationList.css";
 import { useSelector, useDispatch } from "react-redux";
 import SearchForm from "./SearchForm";
 import { fetchAllDestinations } from "../store";
+import Loading from "./Loading";
 export default function DestinationList() {
   const dispatchHandler = useDispatch();
   useEffect(() => {
     dispatchHandler(fetchAllDestinations());
   }, [dispatchHandler]);
-  const { destinations, searchTerm } = useSelector((state) => state);
+  const { destinations, searchTerm, isLoading, error } = useSelector(
+    (state) => state
+  );
 
   const filteredDistinations = destinations.filter((destination) => {
     if (searchTerm === "") {
@@ -20,8 +23,15 @@ export default function DestinationList() {
       return destination;
     }
   });
-  return (
-    <main className="conatiner mt-5 p-lg-4 p-3">
+  let contents;
+  if (isLoading) {
+    contents = <Loading></Loading>;
+  } else if (error) {
+    contents = (
+      <div className="col-12 text-center">Error in Fetching data !</div>
+    );
+  } else {
+    contents = (
       <div className="row">
         <h1 className="col-12 text-center">Most Popular Destinations</h1>
         <p className="col-12 text-center">
@@ -41,6 +51,7 @@ export default function DestinationList() {
           })
         )}
       </div>
-    </main>
-  );
+    );
+  }
+  return <main className="conatiner mt-5 p-lg-4 p-3">{contents}</main>;
 }

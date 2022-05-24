@@ -13,7 +13,7 @@ export default function SearchForm() {
   return (
     <form className="form-outline" onSubmit={submitHandler}>
       <input
-        type="text"
+        type="search"
         id="searchTerm"
         placeholder="search destinations"
         className="form-control w-lg-50 w-75 mx-auto"
