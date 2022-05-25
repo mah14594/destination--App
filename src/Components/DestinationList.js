@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Destination from "./Destination";
 import "./DestinationList.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import SearchForm from "./SearchForm";
-import { fetchAllDestinations } from "../store";
-import { Actions } from "../store/index";
 import Loading from "./Loading";
 export default function DestinationList() {
-  const dispatchHandler = useDispatch();
-  console.log("destina");
-  useEffect(() => {
-    dispatchHandler(Actions.setSearchTerm(""));
-    dispatchHandler(fetchAllDestinations());
-  }, [dispatchHandler]);
   const { destinations, searchTerm, isLoading, error } = useSelector(
     (state) => state
   );
@@ -31,7 +23,7 @@ export default function DestinationList() {
     contents = <Loading></Loading>;
   } else if (error) {
     contents = (
-      <div className="col-12 text-center">Error in Fetching data !</div>
+      <div className="col-12 text-center">Error occured! try agian later.</div>
     );
   } else {
     contents = (

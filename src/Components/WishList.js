@@ -1,20 +1,17 @@
-import React, { Fragment, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import "./WishList.css";
 import WishDestination from "./WishDestination";
-import { fetchWishDestinations } from "../store";
 import Loading from "./Loading";
 export default function WishList() {
-  const dispatchHandler = useDispatch();
-  useEffect(() => {
-    dispatchHandler(fetchWishDestinations());
-  }, [dispatchHandler]);
   const { wishList, isLoading, error } = useSelector((state) => state);
   let contents;
   if (isLoading) {
     contents = <Loading></Loading>;
   } else if (error) {
-    contents = <div className="col-12 -text-center"></div>;
+    contents = (
+      <div className="col-12 text-center">Error occured! try again later</div>
+    );
   } else {
     contents = (
       <Fragment>

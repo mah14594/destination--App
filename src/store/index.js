@@ -30,11 +30,7 @@ const destinationsSlice = createSlice({
         state.destinations,
         action.payload
       );
-      console.log(targetDestination);
-
       targetDestination.isFavourit = false;
-      // const newDestinations = [targetDestination, ...state.destinations];
-      // state.destinations = newDestinations;
       state.wishList = state.wishList.filter(
         (destination) => destination.id !== action.payload
       );
@@ -45,7 +41,6 @@ const destinationsSlice = createSlice({
         (destination) => destination.id === ID
       );
       targetDestination.isCompleted = true;
-      console.log(`${ID} checked `);
     },
     setWishList(state, action) {
       state.wishList = action.payload;
@@ -75,7 +70,6 @@ export const sendDestinations = (destinations, urlKey) => {
         ` https://destination-app-d14f1-default-rtdb.firebaseio.com/${urlKey}.json`,
         {
           method: "PUT",
-          //   mode: "no-cors",
           body: JSON.stringify(destinations),
         }
       );
@@ -94,16 +88,13 @@ export const sendDestinations = (destinations, urlKey) => {
 export const fetchWishDestinations = () => {
   return async (dispatch) => {
     dispatch(Actions.setIsLoading(true));
-
-    const destinationsResponse = await fetch(
-      " https://destination-app-d14f1-default-rtdb.firebaseio.com/wishlist.json"
-    );
-
-    if (!destinationsResponse.ok) {
-      throw new Error("error fetching data");
-    }
-
     try {
+      const destinationsResponse = await fetch(
+        " https://destination-app-d14f1-default-rtdb.firebaseio.com/wishlist.json"
+      );
+      if (!destinationsResponse.ok) {
+        throw new Error("error fetching data");
+      }
       let wishList = [];
       const destinationsData = await destinationsResponse.json();
       for (const key in destinationsData) {
@@ -111,7 +102,6 @@ export const fetchWishDestinations = () => {
       }
       dispatch(Actions.setWishList(wishList));
     } catch (e) {
-      dispatch(Actions.setIsLoading(false));
       dispatch(Actions.setError(true));
     }
     dispatch(Actions.setIsLoading(false));
@@ -120,19 +110,18 @@ export const fetchWishDestinations = () => {
 export const fetchAllDestinations = () => {
   return async (dispatch) => {
     dispatch(Actions.setIsLoading(true));
-    dispatch(Actions.setError(false));
-    const destinationsResponse = await fetch(
-      " https://destination-app-d14f1-default-rtdb.firebaseio.com/destinations.json"
-    );
-    if (!destinationsResponse.ok) {
-      throw new Error("error fetching data");
-    }
-
     try {
-      const destinationsData = await destinationsResponse.json();
-      dispatch(Actions.setDestinations(destinationsData));
-    } catch (error) {
-      dispatch(Actions.setIsLoading(false));
+      const destinationsResponse = await fetch(
+        " https://destination-app-d14f1-default-rtdb.firebaseio.com/destinations.json"
+      );
+      if (!destinationsResponse.ok) {
+        throw new Error("error fetching data");
+      }
+      const destinationsList = await destinationsResponse.json();
+
+      dispatch(Actions.setDestinations(destinationsList));
+    } catch (e) {
+      console.log(e);
       dispatch(Actions.setError(true));
     }
     dispatch(Actions.setIsLoading(false));

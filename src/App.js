@@ -6,17 +6,30 @@ import Navbar from "./Components/NavBar";
 import { useSelector, useDispatch } from "react-redux";
 import { sendDestinations } from "./store";
 import Loading from "./Components/Loading";
+import { fetchAllDestinations, fetchWishDestinations } from "./store/index";
+import { Actions } from "./store";
 let isInitial = true;
 const Home = lazy(() => import("./Pages/Home"));
 const Favourits = lazy(() => import("./Pages/Favourits"));
 const Error = lazy(() => import("./Pages/Error"));
+
 function App() {
   const { wishList, destinations } = useSelector((state) => state);
   const dispatchHandler = useDispatch();
   useEffect(() => {
-    if (destinations.length !== 0) {
-      dispatchHandler(sendDestinations(wishList, "wishlist"));
+    dispatchHandler(Actions.setSearchTerm(""));
+    dispatchHandler(fetchAllDestinations());
+  }, [dispatchHandler]);
+  useEffect(() => {
+    dispatchHandler(fetchWishDestinations());
+  }, [dispatchHandler]);
+
+  useEffect(() => {
+    if (isInitial) {
+      isInitial = false;
+      return;
     }
+    dispatchHandler(sendDestinations(wishList, "wishlist"));
   }, [wishList, dispatchHandler]);
   useEffect(() => {
     if (destinations.length !== 0) {
